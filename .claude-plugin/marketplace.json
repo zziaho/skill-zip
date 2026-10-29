@@ -1,0 +1,14 @@
+{
+  "name": "skill-zip",
+  "owner": {
+    "name": "zziaho"
+  },
+  "description": "Practical agent skills for Korean developers",
+  "plugins": [
+    {
+      "name": "skill-zip",
+      "source": "./",
+      "description": "Practical agent skills for Korean developers: KWCAG accessibility and other Korea-specific development standards"
+    }
+  ]
+}

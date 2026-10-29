@@ -1,0 +1,14 @@
+{
+  "name": "skill-zip",
+  "description": "Practical agent skills for Korean developers: KWCAG accessibility and other Korea-specific development standards",
+  "version": "0.1.0",
+  "author": {
+    "name": "zziaho"
+  },
+  "homepage": "https://github.com/zziaho/skill-zip",
+  "repository": "https://github.com/zziaho/skill-zip",
+  "license": "MIT",
+  "skills": [
+    "./frontend/accessibility"
+  ]
+}
