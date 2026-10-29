@@ -1,8 +1,8 @@
 # skill-zip
 
-**스킬집 (skill + 集)**: a collection of agent skills, organized by topic.
+**English** | [한국어](README_ko.md)
 
-에이전트 스킬을 주제별로 모아 둔 저장소입니다.
+**스킬집 (skill + 集)**: a collection of agent skills, organized by topic.
 
 ## Layout
 
@@ -11,12 +11,16 @@ skill-zip/
 └── <category>/
     └── <skill-name>/
         ├── SKILL.md
+        ├── SKILL_ko.md
         └── references/
+            ├── <file>.md
+            └── <file>_ko.md
 ```
 
-Each skill directory name matches the `name` field in its `SKILL.md` frontmatter.
-
-스킬 폴더 이름은 `SKILL.md` frontmatter의 `name` 값과 같습니다.
+- Each skill directory name matches the `name` field in its `SKILL.md` frontmatter.
+- Every document is maintained in two languages: the English original and a Korean version with `_ko` appended to the file name (e.g., `SKILL.md` / `SKILL_ko.md`). When you change one, update the other in the same commit.
+- Korean files follow the [fluent-korean](https://github.com/snflkd/fluent-korean) writing guidelines.
+- Agents load `SKILL.md` as the skill entry point; `SKILL_ko.md` is a Korean reference for human readers.
 
 ## Skills
 
