@@ -54,17 +54,18 @@ push와 pull request가 발생할 때마다 CI에서도 같은 검사를 실행�
 [Conventional Commits](https://www.conventionalcommits.org/) 형식을 따릅니다.
 
 ```
-<type>(<scope>): <영어로 작성한 제목>
-
-<영어로 작성한 본문>
+<type>(<scope>): <한국어로 작성한 제목>
 
 <한국어로 작성한 본문>
+
+<영어로 작성한 본문>
 ```
 
 - `type`: `feat`, `fix`, `docs`, `chore`, `ci`, `refactor` 등을 사용합니다.
 - `scope`: 변경한 스킬의 카테고리(예: `frontend`)를 적으며, 해당하는 경우에만 사용합니다.
-- 제목 줄은 영어로 작성합니다. 본문은 영어로 먼저 작성하고, 그다음에 한국어로 작성합니다.
-- 한국어 본문도 [fluent-korean](https://github.com/snflkd/fluent-korean) 지침에 따라 작성합니다.
+- `type`과 `scope`는 영어로 유지하고, 제목 줄은 한국어로 작성합니다.
+- 본문은 한국어로 먼저 작성하고, 그다음에 같은 내용을 영어로 작성합니다.
+- 한국어 제목과 본문은 [fluent-korean](https://github.com/snflkd/fluent-korean) 지침에 따라 작성합니다. 이 규칙 이전의 커밋은 제목이 영어로 되어 있으며, 다시 작성하지 않습니다.
 
 ## 라이선스
 

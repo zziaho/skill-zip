@@ -54,17 +54,18 @@ The same checks run in CI on every push and pull request.
 Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
-<type>(<scope>): <subject in English>
-
-<body in English>
+<type>(<scope>): <subject in Korean>
 
 <body in Korean>
+
+<body in English>
 ```
 
 - `type`: `feat`, `fix`, `docs`, `chore`, `ci`, `refactor`, and so on.
 - `scope`: the category of the skill you changed (e.g., `frontend`), when it applies.
-- Write the subject line in English. Write the body in English first, then in Korean.
-- Write the Korean body according to the [fluent-korean](https://github.com/snflkd/fluent-korean) guidelines as well.
+- Keep `type` and `scope` in English, and write the subject line in Korean.
+- Write the body in Korean first, then the same content in English.
+- Write the Korean subject and body according to the [fluent-korean](https://github.com/snflkd/fluent-korean) guidelines. Commits made before this rule have English subjects; do not rewrite them.
 
 ## License
 
