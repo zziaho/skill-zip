@@ -44,11 +44,17 @@ On Claude Code versions earlier than 2.1.275, add the marketplace first:
 |--------------|-------|-------------|
 | Build and review accessible UI | [`accessibility`](frontend/accessibility/SKILL.md) | KWCAG 2.2 (all 33 items), MACAG 2025, WCAG 2.2 Level A/AA, and WAI-ARIA 1.2 reference with rules, test steps, ARIA widget patterns, and code snippets |
 
+### Backend
+
+| What it does | Skill | Description |
+|--------------|-------|-------------|
+| Build and review code on eGovFrame (전자정부 표준프레임워크) | [`egovframe`](backend/egovframe/SKILL.md) | eGovFrame 4.x and 5.x reference with version detection, layer and naming conventions, runtime base classes, the 44-rule PMD ruleset, and the official SQL writing rules split by DBMS |
+
 ## Roadmap
 
 The following topics are planned and not yet available:
 
-- Korean public-sector development: eGovFrame (전자정부 표준프레임워크), web compatibility
+- Korean public-sector development: web compatibility
 - Compliance: Personal Information Protection Act (개인정보보호법), secure coding guide (시큐어 코딩 가이드)
 - Frontend: Korean typography, Korean form patterns (address search, identity verification)
 
