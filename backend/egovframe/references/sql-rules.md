@@ -18,6 +18,7 @@ eGovFrame SQL writing rules (SQL 작성 규칙), from `egovframe-runtime/persist
 | SQL file suffix in the mapper location (e.g. `*_${Globals.DbType}.xml`) | SQL session configuration (`context-mapper.xml` or Java config) |
 
 - When a module has one SQL file per DBMS, review only the files that the mapper location actually loads for the active DBMS.
+- If no file exists for the active DBMS, report that as an `R` finding (`architecture.md`, "Persistence styles", rule 1). Then review the closest variant (MySQL for MariaDB) and state that choice in the report.
 - MariaDB and MySQL accept the same SQL for these rules. If `Globals.DbType` is `mariadb` but only `*_mysql.xml` files exist, the files are fine but the mapper location loads nothing (`architecture.md`, "Persistence styles", rule 1).
 - HSQLDB, MySQL, MariaDB and PostgreSQL are not Oracle family: group B does not apply. For other DBMSs (for example Altibase or CUBRID), check whether they support Oracle's `(+)` join and hint syntax before applying group B (unverified in this skill).
 
@@ -106,6 +107,7 @@ python <skill-folder>/scripts/check_sql.py src/main/resources --dbms mysql
 | `UNION` without `ALL` | Performance principle 14 |
 | DELETE without WHERE | DELETE example |
 
+- First confirm that the mapper location loads the files (`architecture.md`, "Persistence styles", rule 1). Findings in files that are never loaded are moot; report the loading problem instead.
 - Use `--dbms` in projects with one SQL file per DBMS, with the active `Globals.DbType` value.
 - Output lines are `path:line: [rule] message`; the exit code is 1 when findings exist.
 - The script does not check layout, alignment, join order, quoted literals, or any group B, C or D rule. Review those by reading the SQL.
