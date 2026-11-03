@@ -18,6 +18,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 IGNORED_DIRS = {".git", ".github", ".claude-plugin", ".omc", "node_modules", "reference"}
 KO_SUFFIX = "_ko"
+# Files whose Korean version is the default name. English file -> Korean file.
+KOREAN_DEFAULT = {"README_en.md": "README.md"}
 
 
 def iter_markdown():
@@ -46,6 +48,18 @@ def structure(path):
 def check_pairs(errors):
     for path in iter_markdown():
         rel = path.relative_to(ROOT).as_posix()
+        if rel in KOREAN_DEFAULT.values():
+            continue  # Korean file; checked from its English pair below
+        if rel in KOREAN_DEFAULT:
+            korean = ROOT / KOREAN_DEFAULT[rel]
+            if not korean.exists():
+                errors.append(f"{rel}: no Korean pair ({korean.name})")
+                continue
+            en, ko = structure(path), structure(korean)
+            for key in en:
+                if en[key] != ko[key]:
+                    errors.append(f"{rel}: {key} differ (en {en[key]}, ko {ko[key]})")
+            continue
         if path.stem.endswith(KO_SUFFIX):
             original = path.with_name(path.stem[: -len(KO_SUFFIX)] + ".md")
             if not original.exists():

@@ -18,7 +18,7 @@ skill-zip collects practical skills for Korean developers. A new skill should co
 4. Write the Korean version of every document (see [Bilingual documents](#bilingual-documents)).
 5. Register the skill:
    - Add its path to `skills` in `.claude-plugin/plugin.json`.
-   - Add a row to the category table in both `README.md` and `README_ko.md`.
+   - Add a row to the category table in both `README.md` (Korean) and `README_en.md` (English).
 6. Run the checks (see [Checks](#checks)).
 
 ## Content rules
@@ -29,7 +29,7 @@ skill-zip collects practical skills for Korean developers. A new skill should co
 
 ## Bilingual documents
 
-- Every Markdown document has an English original and a Korean version named `<name>_ko.md` in the same directory (e.g., `SKILL.md` and `SKILL_ko.md`). `LICENSE` and non-document files are excluded.
+- Every Markdown document has an English original and a Korean version named `<name>_ko.md` in the same directory (e.g., `SKILL.md` and `SKILL_ko.md`). `LICENSE` and non-document files are excluded. The README is the exception: the Korean version is the default `README.md` and the English version is `README_en.md`.
 - When you change one file of a pair, update the other in the same commit.
 - Keep the structure of each pair identical: the same headings, table rows, and code blocks.
 - Inside Korean files, link to other Korean files (`*_ko.md`).
