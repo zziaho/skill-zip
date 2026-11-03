@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-IGNORED_DIRS = {".git", ".github", ".claude-plugin", ".omc", "node_modules"}
+IGNORED_DIRS = {".git", ".github", ".claude-plugin", ".omc", "node_modules", "reference"}
 KO_SUFFIX = "_ko"
 
 
