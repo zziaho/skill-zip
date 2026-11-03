@@ -1,6 +1,6 @@
 # eGovFrame 5.x 실행환경
 
-eGovFrame 5.x의 클래스 이름, import, 설정을 다룹니다. 실행환경 `v5.0.2-Final`(2026-09-22), `egovframe-web-sample`의 `v5.0.0` 태그, `egovframe-boot-sample-java-config`로 검증했습니다. 5.0.0은 2026-05-18에, 5.0.1은 2026-09-03에 배포되었습니다.
+eGovFrame 5.x의 클래스 이름, import, 설정을 다룹니다. 실행환경 `v5.0.2-Final`(2026-09-22), `egovframe-web-sample`의 `v5.0.0` 태그, `egovframe-boot-sample-java-config`로 검증했습니다. 5.0.0은 2026-05-18에, 5.0.1은 2026-09-03에 배포되었습니다. 5.0.0과 5.0.1은 클래스 목록 전체를 비교하지 않았습니다. 5.0.0 웹 샘플이 같은 핵심 클래스(`@EgovMapper`, `EgovAbstractServiceImpl`, `jakarta.*`)를 사용한다는 점만 확인했으므로, 이 두 버전에서 그 밖의 클래스는 미검증으로 취급합니다.
 
 ## 플랫폼
 

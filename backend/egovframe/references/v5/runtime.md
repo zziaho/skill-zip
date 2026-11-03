@@ -1,6 +1,6 @@
 # eGovFrame 5.x Runtime
 
-Class names, imports and configuration for eGovFrame 5.x. Verified against runtime `v5.0.2-Final` (2026-09-22), `egovframe-web-sample` tag `v5.0.0` and `egovframe-boot-sample-java-config`. 5.0.0 was released on 2026-05-18 and 5.0.1 on 2026-09-03.
+Class names, imports and configuration for eGovFrame 5.x. Verified against runtime `v5.0.2-Final` (2026-09-22), `egovframe-web-sample` tag `v5.0.0` and `egovframe-boot-sample-java-config`. 5.0.0 was released on 2026-05-18 and 5.0.1 on 2026-09-03. For 5.0.0 and 5.0.1 the full class list was not compared; the 5.0.0 web sample uses the same core classes (`@EgovMapper`, `EgovAbstractServiceImpl`, `jakarta.*`), so treat other classes as unverified on those versions.
 
 ## Platform
 
