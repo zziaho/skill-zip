@@ -26,7 +26,7 @@ The runtime is organised into service groups. Use them to place code and to choo
 | 3 | ServiceImpl extends `EgovAbstractServiceImpl` and implements the Service interface | G | Check the `extends` clause of every `*ServiceImpl` |
 | 4 | Business errors are raised through `processException("message.key")` from the ServiceImpl | G | Look for `new RuntimeException`/`new Exception` in ServiceImpl classes |
 | 5 | Persistence uses one of the styles in "Persistence styles" below, consistently within the project | G | Identify the style first; apply only that style's checks |
-| 6 | Transactions are applied by AOP on ServiceImpl methods with `rollback-for="Exception"` | G | Find the `tx:advice`, the Java config advisor or `@Transactional` and confirm it covers `*Impl` classes and checked exceptions |
+| 6 | Transactions are applied by AOP on ServiceImpl methods with `rollback-for="Exception"` | G | Find the `tx:advice`, the Java config advisor or `@Transactional` and confirm it covers `*Impl` classes and checked exceptions. When rules are set per method-name pattern (`tx:method name="insert*"`, or a `TransactionInterceptor` attribute map such as `insert*` → `PROPAGATION_REQUIRED,-Exception`), check every write method name against the patterns: a write method that only matches a pattern without `-Exception` (or `rollback-for`) does not roll back on checked exceptions |
 | 7 | The transaction pointcut expression matches the package where the `*Impl` classes actually are | R | Compare the expression with real paths: `execution(* x..service.*Impl.*(..))` does not match `x.y.service.impl.FooServiceImpl`; `execution(* x..impl.*Impl.*(..))` does. A mismatch means no transaction at all |
 
 The guide does not state which layer may call which. Treat a Controller that calls a Mapper directly as a `C` recommendation, not a violation.
@@ -40,7 +40,7 @@ eGovFrame projects use one of three styles. The official samples use the Mapper 
 | Style | How to recognise it | Rules that apply | Strength |
 |-------|---------------------|------------------|----------|
 | Mapper interface | Interfaces annotated with the version's mapper annotation (`@Mapper` in 4.x, `@EgovMapper` in 5.x), scanned by `MapperConfigurer` | Namespace is the interface's fully qualified name; SQL ID equals the method name; the interface's package is in `basePackage` | G |
-| DAO class | `@Repository("XxxDAO")` classes that extend `EgovAbstractMapper`, often through a project base class such as `EgovComAbstractDAO`, calling `selectList("XxxDAO.selectXxxList", vo)` | Namespace is the DAO name string (e.g. `XxxDAO`); statement IDs are written as `"<namespace>.<id>"`; every ID used in Java exists in the XML | G |
+| DAO class | `@Repository("XxxDAO")` classes that extend `EgovAbstractMapper`, often through a project base class such as `EgovComAbstractDAO`, calling `selectList("XxxDAO.selectXxxList", vo)` | Namespace is the DAO name string (e.g. `XxxDAO`); statement IDs are written as `"<namespace>.<id>"`; every ID used in Java exists in the XML. The common components also write the prefix inside the ID (`id="XxxDAO.selectXxx"` in `namespace="XxxDAO"`); MyBatis accepts this form, so do not report it | G |
 | JPA | `*Repository` interfaces extending Spring Data repositories | Outside this skill (see SKILL.md, "Scope") | — |
 
 Checks for both MyBatis styles:

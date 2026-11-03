@@ -26,7 +26,7 @@ eGovFrame 애플리케이션의 레이어 구조, 패키지 구성, 이름 규�
 | 3 | ServiceImpl은 `EgovAbstractServiceImpl`을 상속하고 Service 인터페이스를 구현합니다 | G | 모든 `*ServiceImpl` 클래스의 `extends` 절을 확인합니다 |
 | 4 | 업무 오류는 ServiceImpl에서 `processException("메시지.키")`로 발생시킵니다 | G | ServiceImpl 클래스에서 `new RuntimeException`, `new Exception`을 찾습니다 |
 | 5 | 데이터 접근에는 아래 "저장 방식" 절의 방식 중 하나를 프로젝트 안에서 일관되게 사용합니다 | G | 먼저 저장 방식을 파악하고, 그 방식에 해당하는 검사만 적용합니다 |
-| 6 | 트랜잭션은 AOP로 ServiceImpl 메서드에 적용하며, `rollback-for="Exception"`을 지정합니다 | G | `tx:advice`, Java 설정의 advisor, `@Transactional` 중 프로젝트가 쓰는 설정을 찾아서 `*Impl` 클래스와 검사 예외(checked exception)까지 포함하는지 확인합니다 |
+| 6 | 트랜잭션은 AOP로 ServiceImpl 메서드에 적용하며, `rollback-for="Exception"`을 지정합니다 | G | `tx:advice`, Java 설정의 advisor, `@Transactional` 중 프로젝트가 쓰는 설정을 찾아서 `*Impl` 클래스와 검사 예외(checked exception)까지 포함하는지 확인합니다. 메서드 이름 패턴마다 규칙을 따로 정했다면(`tx:method name="insert*"`, 또는 `insert*` → `PROPAGATION_REQUIRED,-Exception` 같은 `TransactionInterceptor` 속성 맵), 쓰기 메서드의 이름을 모든 패턴과 하나씩 대조합니다. `-Exception`(또는 `rollback-for`)이 없는 패턴에만 일치하는 쓰기 메서드는 검사 예외가 발생해도 롤백되지 않습니다 |
 | 7 | 트랜잭션 포인트컷 표현식이 `*Impl` 클래스가 실제로 있는 패키지와 일치해야 합니다 | R | 표현식을 실제 경로와 비교합니다. `execution(* x..service.*Impl.*(..))`는 `x.y.service.impl.FooServiceImpl`과 일치하지 않고, `execution(* x..impl.*Impl.*(..))`는 일치합니다. 일치하지 않으면 트랜잭션이 전혀 적용되지 않습니다 |
 
 어느 레이어가 어느 레이어를 호출할 수 있는지는 가이드에 명시되어 있지 않습니다. 따라서 Controller가 Mapper를 직접 호출하는 코드는 위반이 아니라 `C` 권장 사항으로 보고합니다.
@@ -40,7 +40,7 @@ eGovFrame 프로젝트는 다음 세 가지 방식 중 하나를 사용합니다
 | 방식 | 알아보는 방법 | 적용하는 규칙 | 강도 |
 |------|---------------|---------------|------|
 | Mapper 인터페이스 | 버전에 맞는 Mapper 어노테이션(4.x는 `@Mapper`, 5.x는 `@EgovMapper`)이 붙어 있고 `MapperConfigurer`로 스캔하는 인터페이스 | 네임스페이스는 인터페이스의 전체 이름이고, SQL ID는 메서드 이름과 같습니다. 인터페이스의 패키지가 `basePackage`에 포함되어야 합니다 | G |
-| DAO 클래스 | `EgovAbstractMapper`를 상속하는 `@Repository("XxxDAO")` 클래스입니다. `EgovComAbstractDAO` 같은 프로젝트 기반 클래스를 거쳐 상속하는 경우가 많고, `selectList("XxxDAO.selectXxxList", vo)`처럼 호출합니다 | 네임스페이스는 DAO 이름 문자열(예: `XxxDAO`)이고, 구문 ID는 `"<네임스페이스>.<ID>"`로 적습니다. Java에서 사용하는 ID는 모두 XML에 있어야 합니다 | G |
+| DAO 클래스 | `EgovAbstractMapper`를 상속하는 `@Repository("XxxDAO")` 클래스입니다. `EgovComAbstractDAO` 같은 프로젝트 기반 클래스를 거쳐 상속하는 경우가 많고, `selectList("XxxDAO.selectXxxList", vo)`처럼 호출합니다 | 네임스페이스는 DAO 이름 문자열(예: `XxxDAO`)이고, 구문 ID는 `"<네임스페이스>.<ID>"`로 적습니다. Java에서 사용하는 ID는 모두 XML에 있어야 합니다. 공통컴포넌트는 ID 안에 접두어를 함께 적기도 합니다(`namespace="XxxDAO"` 안의 `id="XxxDAO.selectXxx"`). MyBatis는 이 형태도 받아들이므로 보고하지 않습니다 | G |
 | JPA | Spring Data 저장소를 상속하는 `*Repository` 인터페이스 | 이 스킬의 범위 밖입니다(SKILL_ko.md의 "적용 범위" 참조) | — |
 
 두 MyBatis 방식에 공통으로 적용하는 검사는 다음과 같습니다.
