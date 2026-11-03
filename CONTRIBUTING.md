@@ -64,6 +64,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 - `type`: `feat`, `fix`, `docs`, `chore`, `ci`, `refactor`, and so on.
 - `scope`: the category of the skill you changed (e.g., `frontend`), when it applies.
 - Write the subject line in English. Write the body in English first, then in Korean.
+- Write the Korean body according to the [fluent-korean](https://github.com/snflkd/fluent-korean) guidelines as well.
 
 ## License
 

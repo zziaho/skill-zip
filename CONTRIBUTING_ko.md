@@ -64,6 +64,7 @@ push와 pull request가 발생할 때마다 CI에서도 같은 검사를 실행�
 - `type`: `feat`, `fix`, `docs`, `chore`, `ci`, `refactor` 등을 사용합니다.
 - `scope`: 변경한 스킬의 카테고리(예: `frontend`)를 적으며, 해당하는 경우에만 사용합니다.
 - 제목 줄은 영어로 작성합니다. 본문은 영어로 먼저 작성하고, 그다음에 한국어로 작성합니다.
+- 한국어 본문도 [fluent-korean](https://github.com/snflkd/fluent-korean) 지침에 따라 작성합니다.
 
 ## 라이선스
 
