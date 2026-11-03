@@ -12,9 +12,14 @@ eGovFrame SQL writing rules (SQL 작성 규칙), from `egovframe-runtime/persist
 
 | Evidence | Where to look |
 |----------|---------------|
-| JDBC URL prefix: `jdbc:oracle:`, `jdbc:tibero:`, `jdbc:postgresql:`, `jdbc:mysql:`, `jdbc:mariadb:`, `jdbc:Altibase:` | `globals.properties`, `application.yml`/`.properties`, `context-datasource.xml` |
-| `Globals.DbType` (e.g. `mysql`, `oracle`, `postgres`) | `globals.properties` in projects based on the common components |
+| JDBC URL prefix: `jdbc:oracle:`, `jdbc:tibero:`, `jdbc:postgresql:`, `jdbc:mysql:`, `jdbc:mariadb:`, `jdbc:Altibase:`, `jdbc:hsqldb:` | `globals.properties`, `application.yml`/`.properties`, `context-datasource.xml` |
+| `Globals.DbType` (values vary by project, e.g. `mysql`, `mariadb`, `oracle`, `postgresql`, `hsql`) | `globals.properties` or `application.properties` in projects based on the common components |
 | JDBC driver dependency | `pom.xml`, `build.gradle` |
+| SQL file suffix in the mapper location (e.g. `*_${Globals.DbType}.xml`) | SQL session configuration (`context-mapper.xml` or Java config) |
+
+- When a module has one SQL file per DBMS, review only the files that the mapper location actually loads for the active DBMS.
+- MariaDB and MySQL accept the same SQL for these rules. If `Globals.DbType` is `mariadb` but only `*_mysql.xml` files exist, the files are fine but the mapper location loads nothing (`architecture.md`, "Persistence styles", rule 1).
+- HSQLDB, MySQL, MariaDB and PostgreSQL are not Oracle family: group B does not apply. For other DBMSs (for example Altibase or CUBRID), check whether they support Oracle's `(+)` join and hint syntax before applying group B (unverified in this skill).
 
 Then apply the groups in this order:
 
@@ -37,7 +42,7 @@ Then apply the groups in this order:
 | SQL rule 6 | One space after a comma | Find `,X` with no space |
 | SQL rule 7 | No space right after an opening parenthesis | Find `( X` |
 | SQL rule 8 | Comments use `/* */`; `--` is not used | Search for `--` inside SQL |
-| SQL rule 10, performance principle 10 | Every comparison value in WHERE is a bind variable; literal SQL is prohibited. In MyBatis use `#{}`; `${}` builds literal SQL and is also an SQL injection risk | Search for `${` and for quoted literals in WHERE |
+| SQL rule 10, performance principle 10 | Every comparison value in WHERE is a bind variable; literal SQL is prohibited. In MyBatis use `#{}`; `${}` builds literal SQL and is also an SQL injection risk | Search for `${` (report first: injection risk) and for quoted literals in WHERE. Fixed status codes such as `USE_AT = 'Y'` also appear in the official common components: report them once, as low priority, instead of per line |
 | SQL rule 12, performance principle 3 | Inline views at most 3 levels deep (2 recommended) | Count nested `FROM (SELECT` levels |
 | SQL rule 13 | Do not compare hard-coded data values in `DECODE` or `CASE WHEN` | Find `CASE WHEN X = '01'` style comparisons against literal codes |
 | Layout examples | Leading commas; one column per line; table aliases `A`, `B`, `C` in FROM order; `AS` before every column alias; scalar subquery results always aliased | Review SELECT layout against these items |
@@ -81,6 +86,30 @@ These rules state a limit without a technical reason or depend on screen type. R
 | Performance principle 4 | Do not transform data inside scalar subqueries; do not use scalar subqueries in batch programs |
 | Performance principle 17 | Use analytic functions only on statistics screens |
 | Performance principle 18 | Use scalar subqueries only on tables of 10,000 rows or fewer |
+
+## Automated check
+
+`scripts/check_sql.py` (in this skill's folder) scans mapper XML files for the group A rules that a pattern match detects reliably. It is read-only, needs only Python 3, and skips build output folders such as `target` and `build`.
+
+```bash
+python <skill-folder>/scripts/check_sql.py src/main/resources --dbms mysql
+```
+
+| Detected | Rule |
+|----------|------|
+| `${}` | SQL rule 10 |
+| Tab characters inside SQL | SQL rule 3 |
+| `--` comments inside SQL | SQL rule 8 |
+| `SELECT *`, `A.*` | SQL rule 4 |
+| SQL lines longer than 120 columns | SQL rule 1 |
+| Lowercase keywords (first one per statement) | SQL rule 2 |
+| `UNION` without `ALL` | Performance principle 14 |
+| DELETE without WHERE | DELETE example |
+
+- Use `--dbms` in projects with one SQL file per DBMS, with the active `Globals.DbType` value.
+- Output lines are `path:line: [rule] message`; the exit code is 1 when findings exist.
+- The script does not check layout, alignment, join order, quoted literals, or any group B, C or D rule. Review those by reading the SQL.
+- When a project has many findings of one rule (for example tabs in every file), summarise the count per rule instead of listing each line.
 
 ## Example
 

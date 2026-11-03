@@ -22,14 +22,17 @@ Run this before any other step, and whenever the user asks which version the pro
 | Evidence | 4.x | 5.x |
 |----------|-----|-----|
 | Runtime artifact IDs (`pom.xml`, `build.gradle`) | Dotted: `org.egovframe.rte.ptl.mvc`, `org.egovframe.rte.psl.dataaccess` | Hyphenated: `egovframe-rte-ptl-mvc`, `egovframe-rte-psl-dataaccess` |
-| Version declaration | Property `<org.egovframe.rte.version>4.x.x</org.egovframe.rte.version>` | Parent `org.egovframe.boot:egovframe-boot-starter-parent` or `org.egovframe.web:egovframe-web-config-parent` with version `5.x.x`, or the same property |
+| Version declaration | A version property, usually `org.egovframe.rte.version` (names vary, e.g. `egovframe.rte.version`) | Parent `org.egovframe.boot:egovframe-boot-starter-parent` or `org.egovframe.web:egovframe-web-config-parent` with version `5.x.x`, or a version property |
+| Spring Boot | Optional; projects converted to Boot use `org.springframework.boot:spring-boot-starter-parent` 2.7.x | Through the eGovFrame Boot parent |
 | Java / Spring | Java 1.8, Spring 5.3.x | Java 17, Spring 6.2.x |
 | Imports in source | `javax.annotation.Resource`, `javax.servlet.*` | `jakarta.annotation.Resource`, `jakarta.servlet.*` |
 | Mapper annotation | `org.egovframe.rte.psl.dataaccess.mapper.Mapper` | `org.egovframe.rte.psl.dataaccess.mapper.EgovMapper` |
 
 - Read the exact version from the property or parent version. Artifact naming and imports only confirm the major version.
+- Find the property by the value it feeds into the runtime dependencies, not by its name. If the property is used but not defined in the project's POM, it comes from the parent: read the parent version instead.
 - If the user states a version, still check the build file. Report any mismatch instead of silently following either one.
-- Packages under `egovframework.rte.*` (instead of `org.egovframe.rte.*`) indicate 3.x or earlier. **This skill does not cover 3.x** (unverified: the package rename happened in 4.0). Say so and apply only the common files.
+- Application packages such as `egovframework.com.*` and `egovframework.let.*` (common components and templates) are project code, not the runtime. Judge the runtime only by imports from `org.egovframe.rte.*` or `egovframework.rte.*`.
+- Runtime imports under `egovframework.rte.*` (instead of `org.egovframe.rte.*`) indicate 3.x or earlier. **This skill does not cover 3.x** (unverified: the package rename happened in 4.0). Say so and apply only the common files.
 - `references/v4/runtime.md` is verified against 4.3.0 only. For 4.0 to 4.2, treat class availability as unverified and confirm it in the project's dependencies.
 
 ## Conventions
@@ -46,6 +49,14 @@ Every rule in the reference files carries a strength:
 - A project's own development standard (개발 표준 정의서), if present, overrides `G` and `C` items. Ask for it when reviewing a public-sector project.
 - Cite official numbering in reports (e.g., "SQL rule 10", "performance principle 14", "PMD rule 34 SystemPrintln").
 
+## Scope
+
+The official guide is written for server-rendered MVC (`.do` URLs, JSP views) on MyBatis or iBatis. For code outside that model:
+
+- **REST controllers** (`@RestController`, JSON responses, JWT, Swagger): apply the layer chain and the Service, persistence and SQL rules. The URL and view-name conventions do not apply, and the guide has no rules for response formats or authentication. Do not report REST style as a deviation.
+- **JPA repositories** (`spring-boot-starter-data-jpa`, `*Repository` interfaces): the Mapper/DAO and SQL rules do not apply. Apply the layer chain, exception and transaction rules only, and say that the rest is outside this skill.
+- Findings that no rule covers (logic bugs, hard-coded test users, missing authorization) are still worth reporting. Mark them as outside the eGovFrame rules instead of attaching a rule number.
+
 ## Quick Lookup
 
 | Task | File to Load |
@@ -54,7 +65,9 @@ Every rule in the reference files carries a strength:
 | Add a feature: Controller, Service, ServiceImpl, Mapper, VO, SQL file | `references/architecture.md` + version file |
 | Package layout, file locations, URL and SQL ID naming | `references/architecture.md` |
 | Transactions, component scanning, AOP pointcuts | `references/architecture.md` |
+| Mapper interface vs DAO class style, one SQL file per DBMS | `references/architecture.md` (section "Persistence styles") |
 | Write or review SQL, MyBatis mapper XML | `references/sql-rules.md` |
+| Scan many mapper XML files for SQL rule violations | Run `scripts/check_sql.py` (see `references/sql-rules.md`, section "Automated check") |
 | Java code quality review, PMD findings, security weaknesses | `references/code-inspection.md` |
 | Exceptions, `processException`, logging | `references/foundation.md` |
 | ID generation, property service, message source | `references/foundation.md` + version file |
@@ -69,7 +82,7 @@ Every rule in the reference files carries a strength:
 
 ## When reviewing
 
-1. Detect the version and the DBMS
-2. Check the code against each relevant file, using the **Check** column
+1. Detect the version, the DBMS and the persistence style (Mapper interface, DAO class or JPA). In projects with one SQL file per DBMS, review only the files for the active DBMS
+2. Check the code against each relevant file, using the **Check** column. For SQL, run `scripts/check_sql.py` first and spend review effort on the rules it cannot detect
 3. Group findings: `R` violations first, then `G` and `C` recommendations
 4. For each finding give the file and line, the rule number and strength, and a concrete fix that uses the class names from the version file

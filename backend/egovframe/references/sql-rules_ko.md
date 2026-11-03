@@ -12,9 +12,14 @@
 
 | 근거 | 확인할 위치 |
 |------|-------------|
-| JDBC URL 접두어: `jdbc:oracle:`, `jdbc:tibero:`, `jdbc:postgresql:`, `jdbc:mysql:`, `jdbc:mariadb:`, `jdbc:Altibase:` | `globals.properties`, `application.yml`·`.properties`, `context-datasource.xml` |
-| `Globals.DbType` (예: `mysql`, `oracle`, `postgres`) | 공통컴포넌트 기반 프로젝트의 `globals.properties` |
+| JDBC URL 접두어: `jdbc:oracle:`, `jdbc:tibero:`, `jdbc:postgresql:`, `jdbc:mysql:`, `jdbc:mariadb:`, `jdbc:Altibase:`, `jdbc:hsqldb:` | `globals.properties`, `application.yml`·`.properties`, `context-datasource.xml` |
+| `Globals.DbType` (값은 프로젝트마다 다릅니다. 예: `mysql`, `mariadb`, `oracle`, `postgresql`, `hsql`) | 공통컴포넌트 기반 프로젝트의 `globals.properties`나 `application.properties` |
 | JDBC 드라이버 의존성 | `pom.xml`, `build.gradle` |
+| 매퍼 위치에 들어 있는 SQL 파일 접미어 (예: `*_${Globals.DbType}.xml`) | SQL 세션 설정 (`context-mapper.xml` 또는 Java 설정) |
+
+- 모듈마다 DBMS별 SQL 파일이 따로 있다면, 현재 DBMS에 대해 매퍼 위치 설정이 실제로 로드하는 파일만 검토합니다.
+- 이 규칙들에 관해서는 MariaDB와 MySQL이 같은 SQL을 받아들입니다. 다만 `Globals.DbType`이 `mariadb`인데 `*_mysql.xml` 파일만 있다면, 파일 내용은 문제가 없지만 매퍼 위치 설정이 아무 파일도 로드하지 못합니다(`architecture_ko.md`의 "저장 방식" 절, 1번 규칙).
+- HSQLDB, MySQL, MariaDB, PostgreSQL은 Oracle 계열이 아니므로 B 묶음을 적용하지 않습니다. 그 밖의 DBMS(예: Altibase, CUBRID)는 B 묶음을 적용하기 전에 Oracle의 `(+)` 조인과 힌트 문법을 지원하는지 확인합니다(이 스킬에서는 미검증).
 
 그다음 아래 묶음을 순서대로 적용합니다.
 
@@ -37,7 +42,7 @@
 | SQL 규칙 6 | 콤마 뒤에는 공백을 한 칸 둡니다 | 공백 없이 `,X`로 붙은 곳을 찾습니다 |
 | SQL 규칙 7 | 여는 괄호 바로 뒤에는 공백을 두지 않습니다 | `( X` 형태를 찾습니다 |
 | SQL 규칙 8 | 주석은 `/* */`를 사용하고, `--`는 사용하지 않습니다 | SQL 안에서 `--`를 찾습니다 |
-| SQL 규칙 10, 성능 원칙 10 | WHERE 절의 비교 값은 모두 바인드 변수로 처리하며, 리터럴 SQL은 금지합니다. MyBatis에서는 `#{}`를 사용합니다. `${}`는 리터럴 SQL을 만들 뿐 아니라 SQL 인젝션 위험도 있습니다 | `${`와 WHERE 절의 따옴표 리터럴을 찾습니다 |
+| SQL 규칙 10, 성능 원칙 10 | WHERE 절의 비교 값은 모두 바인드 변수로 처리하며, 리터럴 SQL은 금지합니다. MyBatis에서는 `#{}`를 사용합니다. `${}`는 리터럴 SQL을 만들 뿐 아니라 SQL 인젝션 위험도 있습니다 | `${`(SQL 인젝션 위험이 있으므로 가장 먼저 보고합니다)와 WHERE 절의 따옴표 리터럴을 찾습니다. `USE_AT = 'Y'` 같은 고정 상태 코드는 공식 공통컴포넌트에도 있으므로, 줄마다 보고하지 말고 낮은 우선순위로 한 번만 보고합니다 |
 | SQL 규칙 12, 성능 원칙 3 | 인라인 뷰는 최대 3단계까지만 중첩합니다(2단계 권장) | `FROM (SELECT`가 몇 단계로 중첩되는지 셉니다 |
 | SQL 규칙 13 | `DECODE`나 `CASE WHEN`에서 데이터 값을 하드코딩하여 비교하지 않습니다 | `CASE WHEN X = '01'`처럼 리터럴 코드와 비교하는 곳을 찾습니다 |
 | 작성 예시 | 콤마는 앞쪽에 둡니다. 한 줄에 칼럼 하나를 적습니다. 테이블 별칭은 FROM에 나온 순서대로 `A`, `B`, `C`를 씁니다. 모든 칼럼 별칭 앞에 `AS`를 붙이고, 스칼라 서브쿼리 결과에는 항상 별칭을 붙입니다 | SELECT 작성 형식을 이 항목들과 비교합니다 |
@@ -81,6 +86,30 @@ Oracle 계열이 아닌 DBMS에서는 SQL 규칙 9와 11을 위반으로 보고�
 | 성능 원칙 4 | 스칼라 서브쿼리 안에서 데이터를 가공하지 않습니다. 배치 프로그램에서는 스칼라 서브쿼리를 사용하지 않습니다 |
 | 성능 원칙 17 | 분석 함수는 통계 화면에서만 사용합니다 |
 | 성능 원칙 18 | 스칼라 서브쿼리는 10,000건 이하의 테이블에서만 사용합니다 |
+
+## 자동 검사
+
+이 스킬 폴더의 `scripts/check_sql.py`는 A 묶음 규칙 가운데 패턴 검색으로 정확하게 찾을 수 있는 규칙을 매퍼 XML 파일에서 검사합니다. 파일을 읽기만 하고, Python 3만 있으면 실행되며, `target`이나 `build` 같은 빌드 산출물 폴더는 건너뜁니다.
+
+```bash
+python <스킬 폴더>/scripts/check_sql.py src/main/resources --dbms mysql
+```
+
+| 찾아내는 항목 | 규칙 |
+|---------------|------|
+| `${}` | SQL 규칙 10 |
+| SQL 안의 탭 문자 | SQL 규칙 3 |
+| SQL 안의 `--` 주석 | SQL 규칙 8 |
+| `SELECT *`, `A.*` | SQL 규칙 4 |
+| 120칼럼을 넘는 SQL 줄 | SQL 규칙 1 |
+| 소문자 키워드 (구문마다 첫 번째만) | SQL 규칙 2 |
+| `ALL`이 없는 `UNION` | 성능 원칙 14 |
+| WHERE가 없는 DELETE | DELETE 예시 |
+
+- DBMS마다 SQL 파일을 따로 두는 프로젝트에서는 `--dbms`에 현재 `Globals.DbType` 값을 넣어서 실행합니다.
+- 결과는 `경로:행: [규칙] 메시지` 형식으로 출력되며, 발견한 사항이 있으면 종료 코드가 1입니다.
+- 이 스크립트는 작성 형식, 정렬, 조인 순서, 따옴표 리터럴, B·C·D 묶음 규칙은 검사하지 않습니다. 이런 규칙은 SQL을 직접 읽으면서 검토합니다.
+- 한 규칙의 위반이 매우 많다면(예: 모든 파일에 탭이 있는 경우), 줄마다 나열하지 말고 규칙별 개수로 요약해서 보고합니다.
 
 ## 예시
 
