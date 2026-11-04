@@ -17,6 +17,7 @@ npx --yes skills add zziaho/skill-zip --all -g
 # 특정 스킬만 설치
 npx --yes skills add zziaho/skill-zip --skill accessibility -g
 npx --yes skills add zziaho/skill-zip --skill egovframe -g
+npx --yes skills add zziaho/skill-zip --skill secure-coding -g
 
 # 설치하지 않고 사용할 수 있는 스킬 목록만 확인
 npx --yes skills add zziaho/skill-zip --list
@@ -51,13 +52,19 @@ Claude Code 2.1.275보다 이전 버전을 사용한다면, 마켓플레이스�
 |---------------|------|------|
 | 전자정부 표준프레임워크 기반 코드 구현과 검토 | [`egovframe`](backend/egovframe/SKILL_ko.md) | eGovFrame 4.x와 5.x를 다루는 참조 자료입니다. 버전 판별, 레이어·이름 규칙, 실행환경 기반 클래스, PMD 규칙 44개, DBMS별로 나눈 공식 SQL 작성 규칙을 제공합니다 |
 
+### 보안
+
+| 할 수 있는 일 | 스킬 | 설명 |
+|---------------|------|------|
+| 공공 부문 소프트웨어 개발보안(시큐어코딩) 적용과 보안약점 진단 | [`secure-coding`](security/secure-coding/SKILL_ko.md) | 행정안전부 소프트웨어 개발보안 가이드와 보안약점 진단가이드(2021.11. 개정)를 다루는 참조 자료입니다. 구현단계 보안약점 49개의 정탐·오탐 판정 기준, Java·C 안전한 코드, 설계단계 보안설계 기준 20개를 제공합니다 |
+
 ## 저장소 구조
 
 ```
 skill-zip/
 ├── .claude-plugin/         # Claude Code 마켓플레이스·플러그인 매니페스트
 ├── scripts/                # 저장소 검사 스크립트
-├── frontend/, backend/     # 카테고리
+├── <카테고리>/             # frontend, backend, security
 │   └── <스킬 이름>/
 │       ├── SKILL.md        # 에이전트가 불러오는 스킬 진입점
 │       ├── SKILL_ko.md     # 사람이 읽기 위한 한국어 문서

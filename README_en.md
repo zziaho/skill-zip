@@ -17,6 +17,7 @@ npx --yes skills add zziaho/skill-zip --all -g
 # Install a single skill
 npx --yes skills add zziaho/skill-zip --skill accessibility -g
 npx --yes skills add zziaho/skill-zip --skill egovframe -g
+npx --yes skills add zziaho/skill-zip --skill secure-coding -g
 
 # List the available skills without installing
 npx --yes skills add zziaho/skill-zip --list
@@ -51,13 +52,19 @@ On Claude Code versions earlier than 2.1.275, add the marketplace first:
 |--------------|-------|-------------|
 | Build and review code on eGovFrame (전자정부 표준프레임워크) | [`egovframe`](backend/egovframe/SKILL.md) | eGovFrame 4.x and 5.x reference with version detection, layer and naming conventions, runtime base classes, the 44-rule PMD ruleset, and the official SQL writing rules split by DBMS |
 
+### Security
+
+| What it does | Skill | Description |
+|--------------|-------|-------------|
+| Apply Korean public-sector secure coding (소프트웨어 개발보안) and diagnose security weaknesses | [`secure-coding`](security/secure-coding/SKILL.md) | Reference based on the Ministry of the Interior and Safety secure coding guide and weakness diagnosis guide (2021.11. revision), with true- and false-positive criteria for the 49 implementation-phase weaknesses, safe Java and C code, and the 20 design-phase security criteria |
+
 ## Repository layout
 
 ```
 skill-zip/
 ├── .claude-plugin/         # Claude Code marketplace and plugin manifests
 ├── scripts/                # Repository checks
-├── frontend/, backend/     # Categories
+├── <category>/             # frontend, backend, security
 │   └── <skill-name>/
 │       ├── SKILL.md        # Skill entry point loaded by agents
 │       ├── SKILL_ko.md     # Korean version for human readers

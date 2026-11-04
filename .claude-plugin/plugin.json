@@ -1,6 +1,6 @@
 {
   "name": "skill-zip",
-  "description": "Practical agent skills for Korean developers: KWCAG accessibility, eGovFrame, and other Korea-specific development standards",
+  "description": "Practical agent skills for Korean developers: KWCAG accessibility, eGovFrame, public-sector secure coding, and other Korea-specific development standards",
   "version": "0.1.0",
   "author": {
     "name": "zziaho"
@@ -10,6 +10,7 @@
   "license": "MIT",
   "skills": [
     "./frontend/accessibility",
-    "./backend/egovframe"
+    "./backend/egovframe",
+    "./security/secure-coding"
   ]
 }
