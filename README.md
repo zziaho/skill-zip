@@ -76,7 +76,7 @@ skill-zip/
 └── README_en.md            # 영어
 ```
 
-모든 문서는 영어 원본과 한국어 번역본(`<이름>_ko.md`)을 함께 유지합니다. README만 예외로, 한국어판이 `README.md`이고 영어판이 `README_en.md`입니다. 한국어 파일은 [fluent-korean](https://github.com/snflkd/fluent-korean) 작성 지침을 따릅니다. 스킬을 추가하거나 수정하기 전에 [CONTRIBUTING_ko.md](CONTRIBUTING_ko.md)를 확인해 주세요.
+모든 문서는 영어 원본과 한국어 번역본(`<이름>_ko.md`)을 함께 유지합니다. README만 예외로, 한국어판이 `README.md`이고 영어판이 `README_en.md`입니다. 스킬을 추가하거나 수정하기 전에 [CONTRIBUTING_ko.md](CONTRIBUTING_ko.md)를 확인해 주세요.
 
 ## 라이선스
 

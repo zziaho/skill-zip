@@ -33,7 +33,6 @@ skill-zip collects practical skills for Korean developers. A new skill should co
 - When you change one file of a pair, update the other in the same commit.
 - Keep the structure of each pair identical: the same headings, table rows, and code blocks.
 - Inside Korean files, link to other Korean files (`*_ko.md`).
-- Write Korean text according to the [fluent-korean](https://github.com/snflkd/fluent-korean) guidelines.
 - Keep standard numbers, ARIA attributes, code identifiers, and other technical names in their original form.
 
 ## Checks
@@ -63,9 +62,8 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 - `type`: `feat`, `fix`, `docs`, `chore`, `ci`, `refactor`, and so on.
 - `scope`: the category of the skill you changed (e.g., `frontend`), when it applies.
-- Keep `type` and `scope` in English, and write the subject line in Korean.
+- Keep `type` and `scope` in English, and write the subject line in Korean. Commits made before this rule have English subjects; do not rewrite them.
 - Write the body in Korean first, then the same content in English.
-- Write the Korean subject and body according to the [fluent-korean](https://github.com/snflkd/fluent-korean) guidelines. Commits made before this rule have English subjects; do not rewrite them.
 
 ## License
 

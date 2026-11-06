@@ -76,7 +76,7 @@ skill-zip/
 └── README_en.md            # English
 ```
 
-Every document is maintained in English and Korean (`<name>_ko.md`). The README is the exception: the Korean version is `README.md` and the English version is `README_en.md`. Korean files follow the [fluent-korean](https://github.com/snflkd/fluent-korean) writing guidelines. See [CONTRIBUTING.md](CONTRIBUTING.md) before adding or changing a skill.
+Every document is maintained in English and Korean (`<name>_ko.md`). The README is the exception: the Korean version is `README.md` and the English version is `README_en.md`. See [CONTRIBUTING.md](CONTRIBUTING.md) before adding or changing a skill.
 
 ## License
 
