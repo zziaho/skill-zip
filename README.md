@@ -18,6 +18,7 @@ npx --yes skills add zziaho/skill-zip --all -g
 npx --yes skills add zziaho/skill-zip --skill accessibility -g
 npx --yes skills add zziaho/skill-zip --skill krds -g
 npx --yes skills add zziaho/skill-zip --skill egovframe -g
+npx --yes skills add zziaho/skill-zip --skill juso-api -g
 npx --yes skills add zziaho/skill-zip --skill secure-coding -g
 
 # 설치하지 않고 사용할 수 있는 스킬 목록만 확인
@@ -53,6 +54,7 @@ Claude Code 2.1.275보다 이전 버전을 사용한다면, 마켓플레이스�
 | 할 수 있는 일 | 스킬 | 설명 |
 |---------------|------|------|
 | 전자정부 표준프레임워크 기반 코드 구현과 검토 | [`egovframe`](backend/egovframe/SKILL_ko.md) | eGovFrame 4.x와 5.x를 다루는 참조 자료입니다. 버전 판별, 레이어·이름 규칙, 실행환경 기반 클래스, PMD 규칙 44개, DBMS별로 나눈 공식 SQL 작성 규칙을 제공합니다 |
+| 도로명주소 API 연동 구현과 검토 | [`juso-api`](backend/juso-api/SKILL_ko.md) | 주소기반산업지원서비스(business.juso.go.kr)의 도로명주소·영문주소·좌표제공·상세주소 API를 다루는 참조 자료입니다. 원문끼리 맞지 않는 부분을 바로잡은 요청·출력 변수표, API별 오류 코드, 승인키 규칙, IP 차단 회피 기준, 공식 샘플의 보안 문제와 고친 예시를 제공합니다 |
 
 ### 보안
 

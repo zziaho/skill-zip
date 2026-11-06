@@ -18,6 +18,7 @@ npx --yes skills add zziaho/skill-zip --all -g
 npx --yes skills add zziaho/skill-zip --skill accessibility -g
 npx --yes skills add zziaho/skill-zip --skill krds -g
 npx --yes skills add zziaho/skill-zip --skill egovframe -g
+npx --yes skills add zziaho/skill-zip --skill juso-api -g
 npx --yes skills add zziaho/skill-zip --skill secure-coding -g
 
 # List the available skills without installing
@@ -53,6 +54,7 @@ On Claude Code versions earlier than 2.1.275, add the marketplace first:
 | What it does | Skill | Description |
 |--------------|-------|-------------|
 | Build and review code on eGovFrame (전자정부 표준프레임워크) | [`egovframe`](backend/egovframe/SKILL.md) | eGovFrame 4.x and 5.x reference with version detection, layer and naming conventions, runtime base classes, the 44-rule PMD ruleset, and the official SQL writing rules split by DBMS |
+| Integrate and review the Korean road name address APIs | [`juso-api`](backend/juso-api/SKILL.md) | Reference for the road name, English, coordinate and detail address APIs of business.juso.go.kr (주소기반산업지원서비스), with request and output tables corrected where the official sources disagree, error codes per API, approval key rules, how to avoid IP blocking, and fixes for the security problems in the official samples |
 
 ### Security
 
