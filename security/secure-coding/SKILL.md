@@ -12,7 +12,7 @@ Reference for building and reviewing software under the Korean government's soft
 | 소프트웨어 개발보안 가이드 (전자정부 SW 개발·운영자를 위한 소프트웨어 개발보안 가이드) | Revision 5, 2021.11. (file dated 2021-12-29) | Definitions, countermeasures, code examples, design criteria |
 | 소프트웨어 보안약점 진단가이드 | Revision 4, 2021.11. | Diagnosis method, true-positive (정탐) and false-positive (오탐) code |
 
-Both guides cite 「행정기관 및 공공기관 정보시스템 구축·운영 지침」 (행정안전부고시 제2021-3호). **Whether this is still the current notice number is unverified.** Check the current text on law.go.kr before quoting the notice number or its article numbers to a client.
+Both guides cite 「행정기관 및 공공기관 정보시스템 구축·운영 지침」 as 행정안전부고시 제2021-3호. The current version is **행정안전부고시 제2025-1호** (partially revised and effective 2025-01-02; confirmed on law.go.kr on 2026-11-06). Its articles on software development security still match the guides: 제50조 (principle, mandatory projects, scope), 제52조 (diagnosis criteria), 제53조 (diagnosis in audits, diagnosis tools), 제54조 and 별표 4 (diagnosers). 별표 3 (소프트웨어 보안약점 기준) lists the same 20 design criteria and 49 weaknesses that this skill covers. Cite the current notice number to clients, and check law.go.kr for later revisions.
 
 Source attribution required by both guides: 행정안전부·한국인터넷진흥원의 『전자정부 SW 개발·운영자를 위한 소프트웨어 개발보안 가이드』 and 행정안전부·한국인터넷진흥원의 『소프트웨어 보안약점 진단가이드』. This skill summarizes and restructures them; it does not reproduce them.
 
@@ -27,14 +27,14 @@ Source attribution required by both guides: 행정안전부·한국인터넷진�
 
 | Item | Rule in the guides |
 |------|--------------------|
-| Mandatory for | Information system projects subject to audit (정보시스템 감리대상 사업). Other projects are told to apply it on their own |
+| Mandatory for | Projects under 「전자정부법 시행령」 제71조제1항, which the guides describe as information system projects subject to audit (정보시스템 감리대상 사업). Other projects may apply it (지침 제50조) |
 | New development | All design-phase deliverables and all source code |
 | Maintenance | The design deliverables and source code changed by the maintenance, in full (the guides do not say whether this means changed files or changed lines) |
 | Excluded | Commercial off-the-shelf software (상용 소프트웨어) |
 | Criteria | 20 design-phase security criteria and 49 implementation-phase weakness removal criteria |
-| Diagnosis | Audit firms check that the weaknesses were removed. The diagnostic guide says implementation-phase diagnosis can use a certified SW weakness diagnosis tool, with manual diagnosis alongside to reduce misses (미탐). The first report lists file, line, weakness name, cause and fix; a second diagnosis confirms removal |
+| Diagnosis | Audit firms diagnose whether the weaknesses in 별표 3 were removed, and may assign certified diagnosers (진단원) first (지침 제53조). A diagnosis tool, if used, must be certified by the National Security Research Institute, confirmed by KISA, or hold an NIS security function confirmation (보안기능 확인서), and must cover 별표 3. The diagnostic guide adds manual diagnosis to reduce misses (미탐). The first report lists file, line, weakness name, cause and fix; a second diagnosis confirms removal |
 
-The guides do not give a project size or an agency list for the mandate; they refer to 「전자정부법 시행령」 제71조제1항. Do not state a threshold.
+Neither the notice nor the guides give a project size or an agency list for the mandate; they refer to 「전자정부법 시행령」 제71조제1항. Do not state a threshold.
 
 ## Conventions
 
