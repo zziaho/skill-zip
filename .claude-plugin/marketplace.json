@@ -8,7 +8,7 @@
     {
       "name": "skill-zip",
       "source": "./",
-      "description": "Practical agent skills for Korean developers: KWCAG accessibility, eGovFrame, public-sector secure coding, and other Korea-specific development standards"
+      "description": "Practical agent skills for Korean developers: KWCAG accessibility, KRDS government design system, eGovFrame, public-sector secure coding, and other Korea-specific development standards"
     }
   ]
 }

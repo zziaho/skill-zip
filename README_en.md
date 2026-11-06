@@ -16,6 +16,7 @@ npx --yes skills add zziaho/skill-zip --all -g
 
 # Install a single skill
 npx --yes skills add zziaho/skill-zip --skill accessibility -g
+npx --yes skills add zziaho/skill-zip --skill krds -g
 npx --yes skills add zziaho/skill-zip --skill egovframe -g
 npx --yes skills add zziaho/skill-zip --skill secure-coding -g
 
@@ -45,6 +46,7 @@ On Claude Code versions earlier than 2.1.275, add the marketplace first:
 | What it does | Skill | Description |
 |--------------|-------|-------------|
 | Build and review accessible UI | [`accessibility`](frontend/accessibility/SKILL.md) | KWCAG 2.2 (all 33 items), MACAG 2025, WCAG 2.2 Level A/AA, and WAI-ARIA 1.2 reference with rules, test steps, ARIA widget patterns, and code snippets |
+| Build and review forms on Korean government websites with KRDS | [`krds`](frontend/krds/SKILL.md) | Reference for the input form area of KRDS (범정부 UI/UX 디자인시스템), with basic patterns, input, selection, button and help component rules mapped to KWCAG items, krds-* classes, and the application service checklist |
 
 ### Backend
 

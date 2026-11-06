@@ -16,6 +16,7 @@ npx --yes skills add zziaho/skill-zip --all -g
 
 # 특정 스킬만 설치
 npx --yes skills add zziaho/skill-zip --skill accessibility -g
+npx --yes skills add zziaho/skill-zip --skill krds -g
 npx --yes skills add zziaho/skill-zip --skill egovframe -g
 npx --yes skills add zziaho/skill-zip --skill secure-coding -g
 
@@ -45,6 +46,7 @@ Claude Code 2.1.275보다 이전 버전을 사용한다면, 마켓플레이스�
 | 할 수 있는 일 | 스킬 | 설명 |
 |---------------|------|------|
 | 접근성을 갖춘 사용자 인터페이스 구현과 검토 | [`accessibility`](frontend/accessibility/SKILL_ko.md) | KWCAG 2.2(33개 항목 전체), MACAG 2025, WCAG 2.2 Level A/AA, WAI-ARIA 1.2를 다루는 참조 자료입니다. 규칙, 검사 방법, ARIA 위젯 패턴, 코드 예제를 제공합니다 |
+| KRDS 기반 공공 웹사이트 입력 폼 구현과 검토 | [`krds`](frontend/krds/SKILL_ko.md) | 범정부 UI/UX 디자인시스템(KRDS)의 입력 폼 영역을 다루는 참조 자료입니다. 기본 패턴, 입력·선택·버튼·도움 컴포넌트의 규칙과 KWCAG 항목, krds-* 클래스, 신청 서비스 체크리스트를 제공합니다 |
 
 ### 백엔드
 
