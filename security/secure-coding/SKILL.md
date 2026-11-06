@@ -83,10 +83,25 @@ The 49 weaknesses:
 
 ## When reviewing
 
-1. List candidates with the **Find** lines. A diagnosis tool report, if the user has one, is also a candidate list
+1. List candidates: run `scripts/find_candidates.py` (see below), then search the **Find** lines for what the script does not cover. A diagnosis tool report, if the user has one, is also a candidate list
 2. Judge each candidate against **Vulnerable** and **Not vulnerable**, following the data flow from the external input to the use. Report only true positives
 3. For a tool finding that matches a **Not vulnerable** case, say that it is a false positive and cite the case
 4. For each finding give the file and line, the weakness number and Korean name, the strength, the cause, and a fix. Group `R` findings first, then `G` and `D` recommendations
+
+## Candidate search script
+
+`scripts/find_candidates.py` (in this skill's folder) lists candidate lines for the weaknesses that a pattern can find. It is read-only and needs only Python 3. It scans Java, JSP, MyBatis and iBatis mapper XML, Spring Security XML, C and C++, and `.properties`/`.yml` files, and skips build output and test folders.
+
+```bash
+python <skill-folder>/scripts/find_candidates.py src/main --summary   # counts per weakness
+python <skill-folder>/scripts/find_candidates.py src/main --only 1,23,36
+```
+
+- Output lines are `path:line: [보안약점 N 이름] message`; the exit code is 1 when candidates exist. `--include-tests` also scans test folders.
+- Every line is a **candidate**. Judge it with the item's **Vulnerable** and **Not vulnerable** lines before reporting it; many candidates are false positives by design (for example `<%= %>` printing a number).
+- Searched: weaknesses 1 to 15, 17, 19 to 25, 27 to 32, 34, 36 to 39 and 43 to 49. Weakness 16 is covered through the banned functions of 49. Weakness 39 is searched only for a null check placed after the dereference.
+- Not searched, because they need data flow or business context: 18, 26, 33, 35, 40, 41 and 42, and most cases of 39. Review them by reading the code; for Java, a PMD report (the `egovframe` skill's ruleset) covers 39 and 40.
+- On a large project, run `--summary` first, then go through one weakness at a time with `--only`. JSP scriptlet output (weakness 4) usually produces the most candidates.
 
 ## Out of scope
 

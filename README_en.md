@@ -56,7 +56,7 @@ On Claude Code versions earlier than 2.1.275, add the marketplace first:
 
 | What it does | Skill | Description |
 |--------------|-------|-------------|
-| Apply Korean public-sector secure coding (소프트웨어 개발보안) and diagnose security weaknesses | [`secure-coding`](security/secure-coding/SKILL.md) | Reference based on the Ministry of the Interior and Safety secure coding guide and weakness diagnosis guide (2021.11. revision), with true- and false-positive criteria for the 49 implementation-phase weaknesses, safe Java and C code, and the 20 design-phase security criteria |
+| Apply Korean public-sector secure coding (소프트웨어 개발보안) and diagnose security weaknesses | [`secure-coding`](security/secure-coding/SKILL.md) | Reference based on the Ministry of the Interior and Safety secure coding guide and weakness diagnosis guide (2021.11. revision), with true- and false-positive criteria for the 49 implementation-phase weaknesses, safe Java and C code, the 20 design-phase security criteria, and a script that lists candidate weaknesses |
 
 ## Repository layout
 
