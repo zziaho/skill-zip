@@ -195,6 +195,7 @@ Types: SR1 입력데이터 검증 및 표현 (10), SR2 보안기능 (8), SR3 에
 - **What to encrypt** (the diagnostic guide's list): under 개인정보보호법, unique identifiers (resident registration, driver's licence, passport and alien registration numbers), biometric data and passwords; under 정보통신망법, resident registration, credit card and account numbers; under 위치정보법, location data; system secrets such as DB and integration accounts and key settings
 - **Check**: a safe area for sensitive data that it does not leave; encryption with SR2-6 algorithms and keys; no sensitive data in cookies or HTML5 local storage (encrypt if unavoidable); important logic and comments only in server-side code; memory zeroed after use in personal and financial data functions; caching disabled for sensitive pages; `autocomplete="off"` on credential forms
 - The example deliverables also file "no comments that expose sensitive information" and "do not expose stored file names and paths" under SR2-7
+- **`D`**: do not report a login form with `autocomplete="username"` and `"current-password"` as a gap. KWCAG 2.2 7.3.3 접근 가능한 인증 and KRDS (`krds` skill, `application-flow.md`) need password managers and paste to work, and most current browsers ignore `autocomplete="off"` on login fields. Check instead that the project's security design records the choice. Keep `autocomplete="off"` for other sensitive fields such as one-time codes, card numbers and resident registration numbers
 
 ### SR2-8 중요정보 전송
 
